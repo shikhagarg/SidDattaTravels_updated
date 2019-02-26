@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "257171768438",
+    "firebase_url": "https://siddattatravels-9e43a.firebaseio.com",
+    "project_id": "siddattatravels-9e43a",
+    "storage_bucket": "siddattatravels-9e43a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257171768438:android:04dd85f2baed1839",
+        "android_client_info": {
+          "package_name": "com.siddattatravels.siddattatravels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257171768438-nfnv46h66m7b8k1pja9pk9k1bavggels.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.siddattatravels.siddattatravels",
+            "certificate_hash": "102e88a0a198ba82f2532d61d0abc8f0a3422b58"
+          }
+        },
+        {
+          "client_id": "257171768438-e6dj9k9fhdiq582anhsnffkufv9g798j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.siddattatravels.siddattatravels",
+            "certificate_hash": "6e5434588d99e722595c74450ea7f17efa19e071"
+          }
+        },
+        {
+          "client_id": "257171768438-bokr1lh2lge7g6f0q587vc8qtnr076sq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9nf6kANul4e7TUHqxNokhI54XJ45SWks"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257171768438-bokr1lh2lge7g6f0q587vc8qtnr076sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

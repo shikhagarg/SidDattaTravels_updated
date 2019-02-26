@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">SID DATTA Travels</string>
+    <string name="action_settings">Settings</string>
+    <string name="name">Student Name</string>
+    <string name="father_name">Father Name</string>
+    <string name="address">Address</string>
+    <string name="emergency_contact">Emergency Contact Number</string>
+    <string name="student_contact">Student Contact Number</string>
+    <string name="father_contact">Father Contact Number</string>
+    <string name="mother_contact">Mother Contact Number</string>
+    <string name="batch">Batch</string>
+    <string name="stream">Stream</string>
+    <string name="roll_no">Roll number</string>
+    <string name="transport_availing_for">Transport Availing For AC</string>
+    <string name="date_of_availing_transport">Date Of Availing Transport</string>
+    <string name="terms_and_conditions">I agree to the Terms and Conditions</string>
+    <string name="register">Register</string>
+    <string name="select_date_of_availing_transport">Select Date of Availing Transport</string>
+    <string name="terms_data">1. The student should make Monthly payment in advance latest by 04 day of each month for uninterrupted services.\n
+        2. Payment will be accepted in cash/cheque/online/Paytm only.\n
+3. Student using Week day transportation, it will be available only from Monday to Friday. Total trips for the month will vary around 16-17. No adjustment will be allowed in weekend classes if availed any.\n
+4. Student using weekend transportation, it will be available only for Saturday and Sunday. Total trips for the month will vary around 8-9. No adjustment will be allowed in weekday classes if availed any.\n
+5. Please note any extra trips for extra classes apart from the entitled trips of that particular month will be chargeable and also subject to availability of vehicle and number of students availing the trips, if the number of student strength is less than  3 for these classes, then charges will be on higher side.\n
+6. The travel operator will not be responsible for any delay or cancellation due to weather, traffic or any other unavoidable circumstances.\n
+7. The travel operator will not be be responsible for any sudden timing changes at the centre resulting in increase in waiting time at the centre.\n
+8. It is the sole discretion of the travel operator to fix the pick-up points in the route map.\n
+9. Once the fees has been paid by the student, there will be no refund or fee adjustment or carry forwarding if the trips are less than based on the average monthly trips.\n
+10. The charges for any extra trips made by the student will be calculated on pro-rata basis and will be finalised by the travel operator only.\n
+11. The travel operator will be responsible for pick-up and drop of your ward at the centre, other than they will not be responsible for their class attendance.\n
+12. Extra class day for single student no cab facility.\n
+</string>
+    <string name="search_students">Search students..</string>
+    <string name="profile_tab_title">Profile</string>
+    <string name="search_tab_title">Search</string>
+    <string name="sign_in_screen_title">Enter your mobile number to get started</string>
+    <string name="login_text">Login using the OTP sent to %s</string>
+    <string name="enter_otp">Enter OTP</string>
+</resources>
