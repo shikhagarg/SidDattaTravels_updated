@@ -1,8 +1,7 @@
-package com.siddattatravels.siddattatravels.Model;
+package com.siddhathatravels.siddhathatravels.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 
 public class UserProfile implements Parcelable {
@@ -19,7 +18,9 @@ public class UserProfile implements Parcelable {
     public String motherPh;
     public boolean isAvailingAC;
     public String availTransportDate;
-
+    public String registeredPhone;
+    public String createdAt;
+    public String monthlyCharges;
     public UserProfile()
     {
 
@@ -32,12 +33,34 @@ public class UserProfile implements Parcelable {
         batch = in.readString();
         stream = in.readString();
         rollNo = in.readString();
-        isAdmin = in.readByte() != 0;
         studentPh = in.readString();
+        registeredPhone = in.readString();
         fatherPh = in.readString();
         motherPh = in.readString();
-        isAvailingAC = in.readByte() != 0;
         availTransportDate = in.readString();
+        isAdmin = in.readByte() != 0;
+        isAvailingAC = in.readByte() != 0;
+        createdAt = in.readString();
+        monthlyCharges = in.readString();
+    }
+
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "studentName='" + studentName + '\'' +
+                ", fatherName='" + fatherName + '\'' +
+                ", address='" + address + '\'' +
+                ", batch='" + batch + '\'' +
+                ", stream='" + stream + '\'' +
+                ", rollNo='" + rollNo + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", studentPh='" + studentPh + '\'' +
+                ", fatherPh='" + fatherPh + '\'' +
+                ", motherPh='" + motherPh + '\'' +
+                ", isAvailingAC=" + isAvailingAC +
+                ", availTransportDate='" + availTransportDate + '\'' +
+                ", registeredPhone='" + registeredPhone + '\'' +
+                '}';
     }
 
     public static final Creator<UserProfile> CREATOR = new Creator<UserProfile>() {
@@ -52,23 +75,7 @@ public class UserProfile implements Parcelable {
         }
     };
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "UserProfile{" +
-                "studentName='" + studentName + '\'' +
-                ", fatherName='" + fatherName + '\'' +
-                ", address='" + address + '\'' +
-                ", batch='" + batch + '\'' +
-                ", stream='" + stream + '\'' +
-                ", rollNo='" + rollNo + '\'' +
-                ", studentPh='" + studentPh + '\'' +
-                ", fatherPh='" + fatherPh + '\'' +
-                ", motherPh='" + motherPh + '\'' +
-                ", isAvailingAC=" + isAvailingAC +
-                ", availTransportDate='" + availTransportDate + '\'' +
-                '}';
-    }
+
 
     @Override
     public int describeContents() {
@@ -82,12 +89,15 @@ public class UserProfile implements Parcelable {
             dest.writeString(address);
             dest.writeString(batch);
             dest.writeString(stream);
+            dest.writeString(rollNo);
             dest.writeString(studentPh);
+            dest.writeString(registeredPhone);
             dest.writeString(fatherPh);
             dest.writeString(motherPh);
             dest.writeString(availTransportDate);
             dest.writeByte((byte) (isAdmin ? 1 : 0));
             dest.writeByte((byte) (isAvailingAC ? 1 : 0));
-
+            dest.writeString(createdAt);
+            dest.writeString(monthlyCharges);
     }
 }

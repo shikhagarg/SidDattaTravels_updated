@@ -1,12 +1,12 @@
-package com.siddattatravels.siddattatravels.login;
+package com.siddhathatravels.siddhathatravels.login;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.siddattatravels.siddattatravels.activity.LoginActivity;
-import com.siddattatravels.siddattatravels.activity.TabBarActivity;
+import com.siddhathatravels.siddhathatravels.activity.LoginActivity;
+import com.siddhathatravels.siddhathatravels.activity.TabBarActivity;
 
 public class SessionManager {
 

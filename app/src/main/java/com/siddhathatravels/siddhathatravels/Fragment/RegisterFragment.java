@@ -1,4 +1,4 @@
-package com.siddattatravels.siddattatravels.Fragment;
+package com.siddhathatravels.siddhathatravels.Fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -28,8 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.siddattatravels.siddattatravels.Model.UserProfile;
-import com.siddattatravels.siddattatravels.R;
+import com.siddhathatravels.siddhathatravels.Model.UserProfile;
+import com.siddhathatravels.siddhathatravels.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,10 +45,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private TextView tvTerms;
     private CheckBox chkTerms,chkTransport;
     private UserProfile user;
-    private EditText edtStudentName, edtFatherName, edtAddress, edtBatch, edtStream, edtRollNo, edtStudentPh, edtFatherPh, edtMotherPh;
+    private EditText edtStudentName, edtFatherName, edtAddress, edtBatch, edtStream, edtRollNo, edtStudentPh, edtFatherPh, edtMotherPh,edtMonthlyCharges;
     private Context mContext;
     private ProgressDialog progressBar;
-
+    private static boolean isEdit = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,8 +61,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         return inflater.inflate(R.layout.activity_registration,container,false);
 
     }
@@ -71,7 +69,22 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
         customizeUI(view);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if( getArguments() != null)
+                user = getArguments().getParcelable("UserProfile");
 
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SetValues();
+                    }
+                });
+
+            }
+        }).start();
 
     }
 
@@ -86,22 +99,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-       new Thread(new Runnable() {
-            @Override
-            public void run() {
-                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                assert getArguments() != null;
-                user = getArguments().getParcelable("UserProfile");
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SetValues();
-                    }
-                });
-
-            }
-        }).start();
 
     }
 
@@ -127,7 +125,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             edtRollNo.setText(user.rollNo);
             datetime.setText(user.availTransportDate);
             chkTransport.setChecked(user.isAvailingAC);
-
+            chkTransport.jumpDrawablesToCurrentState();
+            edtMonthlyCharges.setText(user.monthlyCharges);
         }
     }
 
@@ -162,9 +161,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             }
 
         };
+        edtMonthlyCharges = view.findViewById(R.id.edt_monthly_charges);
         setTermsAndConditions();
         btnSubmit.setOnClickListener(this);
         datetime.setOnClickListener(this);
+
     }
 
 
@@ -184,15 +185,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void setTermsAndConditions()
     {
-        ClickableSpan termsClickListerner = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                showDialog();
-            }
-        };
-
         SpannableString terms = new SpannableString(getResources().getString(R.string.terms_and_conditions));
-        terms.setSpan(termsClickListerner,15,35,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        terms.setSpan(new myClickableSpan(1),15,35,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        terms.setSpan(new myClickableSpan(2),40,54,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvTerms.setText(terms);
         tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -211,7 +206,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         alertDialog.show();
     }
 
-
+    private void showPolicyDialog()
+    {
+        AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+        alertDialog.setTitle("Privacy Policy");
+        alertDialog.setMessage(getResources().getString(R.string.policy_data));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
 
     @Override
     public void onClick(View v) {
@@ -224,7 +231,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 if(isValid)
                 {
                     createUserProfile();
-                    getActivity().finish();
+                    //getActivity().finish();
                 }
                 break;
             case R.id.datetime:
@@ -251,7 +258,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             userProfile.batch = edtBatch.getText().toString();
             userProfile.availTransportDate = datetime.getText().toString();//new SimpleDateFormat("dd/MM/yyyy",Locale.ENGLISH).parse(datetime.getText().toString());
             userProfile.isAvailingAC = chkTransport.isChecked();
-
+            userProfile.monthlyCharges = edtMonthlyCharges.getText().toString();
             if(user !=null && user.isAdmin)
                 userProfile.isAdmin = true;
 
@@ -274,7 +281,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         if(firebaseUser.getPhoneNumber() != null)
         {
             mDatabase.child("classified").child(firebaseUser.getPhoneNumber());
+            user.registeredPhone = firebaseUser.getPhoneNumber();
+            //  user.isAdmin = true;
             mDatabase.child(firebaseUser.getPhoneNumber()).setValue(user);
+
         }
     }
 
@@ -340,12 +350,34 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             edtMotherPh.setError("Can not be empty");
             return false;
         }
-
+        if(TextUtils.isEmpty(edtMonthlyCharges.getText()))
+        {
+            edtMonthlyCharges.requestFocus();
+            edtMonthlyCharges.setError("Can not be empty");
+            return false;
+        }
         if(!chkTerms.isChecked())
         {
             Toast.makeText(mContext, "Please read and agree to the terms and conditions", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
+    }
+
+    public class myClickableSpan extends ClickableSpan{
+
+        int pos;
+        public myClickableSpan(int position){
+            this.pos=position;
+        }
+
+        @Override
+        public void onClick(View widget) {
+           if(pos==1)
+               showDialog();
+           else
+               showPolicyDialog();
+        }
+
     }
 }

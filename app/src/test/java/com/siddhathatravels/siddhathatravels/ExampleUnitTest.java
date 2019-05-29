@@ -1,4 +1,4 @@
-package com.siddattatravels.siddattatravels;
+package com.siddhathatravels.siddhathatravels;
 
 import org.junit.Test;
 

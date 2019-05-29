@@ -1,4 +1,4 @@
-package com.siddattatravels.siddattatravels.CustomViews;
+package com.siddhathatravels.siddhathatravels.CustomViews;
 
 import android.content.Context;
 import android.graphics.Canvas;

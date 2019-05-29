@@ -1,4 +1,4 @@
-package com.siddattatravels.siddattatravels.activity;
+package com.siddhathatravels.siddhathatravels.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -33,8 +34,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.siddattatravels.siddattatravels.R;
-import com.siddattatravels.siddattatravels.login.SessionManager;
+import com.siddhathatravels.siddhathatravels.R;
+import com.siddhathatravels.siddhathatravels.login.SessionManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     ProgressDialog progress;
     private Toolbar toolbar;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private SessionManager session;
 
@@ -78,6 +80,20 @@ public class LoginActivity extends AppCompatActivity {
         createCallback();
         getInstallationIdentifier();
         // getVerificationDataFromFirestoreAndVerify(null);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            firebaseAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     private void initialiseViews()
@@ -151,8 +167,21 @@ public class LoginActivity extends AppCompatActivity {
                 findViewById(R.id.phone_auth_code_items).setVisibility(View.VISIBLE);
 
                 mLoginText.setText(String.format(getString(R.string.login_text),"+91-"+phoneNumber));
-                //addVerificationDataToFirestore(phoneNumber, verificationId);
+                addVerificationDataToFirestore(phoneNumber, verificationId);
                 mResendToken = token;
+            }
+        };
+
+        mAuthListener = new FirebaseAuth.AuthStateListener(){
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user!=null){
+                    System.out.println("User logged in");
+                }
+                else{
+                    System.out.println("User not logged in");
+                }
             }
         };
     }
@@ -311,28 +340,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    //    private void addVerificationDataToFirestore(String phone, String verificationId) {
-//        Map verifyMap = new HashMap();
-//
-//        verifyMap.put("phone", phone);
-//        verifyMap.put("verificationId", verificationId);
-//        verifyMap.put("timestamp",System.currentTimeMillis());
-//
-//        firestoreDB.collection("phoneAuth").document(uniqueIdentifier)
-//                .set(verifyMap)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "phone auth info added to db ");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding phone auth info", e);
-//                    }
-//                });
-//    }
+        private void addVerificationDataToFirestore(String phone, String verificationId) {
+        Map verifyMap = new HashMap();
+
+        verifyMap.put("phone", phone);
+        verifyMap.put("verificationId", verificationId);
+        verifyMap.put("timestamp",System.currentTimeMillis());
+
+        firestoreDB.collection("phoneAuth").document(uniqueIdentifier)
+                .set(verifyMap)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "phone auth info added to db ");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding phone auth info", e);
+                    }
+                });
+    }
 
     //    private void disableSendCodeButton(long codeSentTimestamp){
 //        long timeElapsed = System.currentTimeMillis()- codeSentTimestamp;
@@ -343,5 +372,27 @@ public class LoginActivity extends AppCompatActivity {
 //            findViewById(R.id.phone_auth_code_items).setVisibility(View.VISIBLE);
 //        }
 //    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d("CDA", "onKeyDown Called");
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        Intent setIntent = new Intent(Intent.ACTION_MAIN);
+        setIntent.addCategory(Intent.CATEGORY_HOME);
+        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(setIntent);
+    }
 
 }

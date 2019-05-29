@@ -8,26 +8,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:257171768438:android:04dd85f2baed1839",
+        "mobilesdk_app_id": "1:257171768438:android:dd90763b83a2ef98",
         "android_client_info": {
-          "package_name": "com.siddattatravels.siddattatravels"
+          "package_name": "com.siddhathatravels.siddhathatravels"
         }
       },
       "oauth_client": [
         {
-          "client_id": "257171768438-nfnv46h66m7b8k1pja9pk9k1bavggels.apps.googleusercontent.com",
+          "client_id": "257171768438-f5ba6ulbpacgourrbsvbtlo2erpco6m8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.siddattatravels.siddattatravels",
-            "certificate_hash": "102e88a0a198ba82f2532d61d0abc8f0a3422b58"
+            "package_name": "com.siddhathatravels.siddhathatravels",
+            "certificate_hash": "67ce7e08a7f95cd27c040c5f2dcf9f43cc33a422"
           }
         },
         {
-          "client_id": "257171768438-e6dj9k9fhdiq582anhsnffkufv9g798j.apps.googleusercontent.com",
+          "client_id": "257171768438-42esr1sno015l4qhv3jh4t6gem2bsado.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.siddattatravels.siddattatravels",
-            "certificate_hash": "6e5434588d99e722595c74450ea7f17efa19e071"
+            "package_name": "com.siddhathatravels.siddhathatravels",
+            "certificate_hash": "3a5ea67f81f295ba3baab660416214b6033042bd"
           }
         },
         {
@@ -41,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "257171768438-bokr1lh2lge7g6f0q587vc8qtnr076sq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

@@ -1,9 +1,7 @@
-package com.siddattatravels.siddattatravels.Utility;
+package com.siddhathatravels.siddhathatravels.Utility;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.EditText;
 
 import java.net.InetAddress;
